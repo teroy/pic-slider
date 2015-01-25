@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Picture Slider</title>
+    <link rel="stylesheet" href="../src/pic-slider.css"/>
+</head>
+<body>
+    <div id="banner" class="picSlider">
+        <div id="bannerContainer" class="picSliderContainer">
+            <div><a href="javascript:;"><img src="images/banner/index.png" alt="index"/></a></div>
+            <div><a href="javascript:;"><img src="images/banner/friend.png" alt="friend"/></a></div>
+            <div><a href="javascript:;"><img src="images/banner/article.png" alt="article"/></a></div>       
+        </div>
+    </div>
+    <script src="../src/pic-slider.js"></script>
+   <script>
+        PicSlider.initalize({
+            id:'banner',
+            containerId:'bannerContainer',
+            height: 250,
+            width: 954,
+            direction:'v', //v代表垂直滚动 h代表水平滚动
+            timer:6000 //单位是ms，表示切换图片的时间间隔
+        });
+    </script>
+</body>
+</html>

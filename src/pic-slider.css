@@ -1,0 +1,14 @@
+.picSlider{ 
+    overflow:hidden;
+}
+.picSliderContainer{    
+    position:relative;      
+    width:9999px;  /*设置超长宽度*/
+    font-size:0px; /*清除标签中的换行空白*/
+}
+.picSliderContainer div{
+    display:inline; /*默认设置为行内元素*/
+}
+.picSliderContainer img{
+    border-style:none; /*清除IE下的默认图片边框*/
+}
