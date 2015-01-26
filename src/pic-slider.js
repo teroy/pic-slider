@@ -1,5 +1,5 @@
-
 var PicSlider = function () {
+    var sliderArray = [];
     var picSlider;
     var picSliderHeight;
     var picSliderWidth;
@@ -10,6 +10,7 @@ var PicSlider = function () {
     var direction;
     var scorll = function () {
         if (picSlider.repeater) {
+            //清除图片轮询
             clearTimeout(picSlider.repeater);
         }
         startIndex = startIndex === picCount ? 1 : ++ startIndex;
@@ -20,7 +21,7 @@ var PicSlider = function () {
     };
     var startSlider = function (positionX, positionY) {
         if (picSliderContainer.repeater) {
-            //清除循环滚动
+            //清除图片滚动
             clearTimeout(picSliderContainer.repeater);
         }
         if (direction === 'v') {
@@ -63,9 +64,19 @@ var PicSlider = function () {
         }, 50);
     };
     var init = function (config) {
+        //判断当前id是否已存在
+        for (var i = 0; i < sliderArray.length; i++) {
+            if (sliderArray[i] === config.id) {
+                return;
+            }
+        }
+
+        //将当前id添加进数组
+        sliderArray[sliderArray.length] = config.id;
+
         //根据id初始化 picSlider & picSliderContainer DOM对象
         picSlider = document.getElementById(config.id);
-        picSliderContainer = document.getElementById(config.containerId);
+        picSliderContainer = picSlider.getElementsByClassName('picSliderContainer')[0];
 
         //初始化picSliderContainer DOM对象的css属性left和top,确保存在初次读取的值
         picSliderContainer.style.left = '0px';
@@ -74,8 +85,11 @@ var PicSlider = function () {
         //初始化picSlider DOM对象的宽度和高度
         picSliderHeight = config.height;
         picSliderWidth = config.width;
-        picSlider.style.height = picSliderHeight + 'px';
-        picSlider.style.width = picSliderWidth + 'px';
+        picSlider.style.height = config.height + 'px';
+        picSlider.style.width = config.width + 'px';
+
+        //初始化滚动图片的数量
+        picCount = picSliderContainer.getElementsByTagName('div').length;
 
         //初始化滚动方向
         direction = config.direction;
@@ -86,9 +100,6 @@ var PicSlider = function () {
                 divs[i].style.display = 'block';
             }
         }
-
-        //初始化滚动图片的数量
-        picCount = picSliderContainer.getElementsByTagName('div').length;
 
         //图片数量大于1的时候才执行循环滚动
         if (picCount > startIndex) {

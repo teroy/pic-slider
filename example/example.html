@@ -2,27 +2,27 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <title>Picture Slider</title>
     <link rel="stylesheet" href="../src/pic-slider.css"/>
 </head>
 <body>
+    <div>å‚ç›´æ»šåŠ¨ç¤ºä¾‹</div>
     <div id="banner" class="picSlider">
-        <div id="bannerContainer" class="picSliderContainer">
+        <div class="picSliderContainer">
             <div><a href="javascript:;"><img src="images/banner/index.png" alt="index"/></a></div>
             <div><a href="javascript:;"><img src="images/banner/friend.png" alt="friend"/></a></div>
             <div><a href="javascript:;"><img src="images/banner/article.png" alt="article"/></a></div>       
         </div>
     </div>
     <script src="../src/pic-slider.js"></script>
-   <script>
+    <script>
         PicSlider.initalize({
             id:'banner',
-            containerId:'bannerContainer',
-            height: 250,
-            width: 954,
-            direction:'v', //v´ú±í´¹Ö±¹ö¶¯ h´ú±íË®Æ½¹ö¶¯
-            timer:6000 //µ¥Î»ÊÇms£¬±íÊ¾ÇĞ»»Í¼Æ¬µÄÊ±¼ä¼ä¸ô
+            height:250,
+            width:954,
+            direction:'v', //vä»£è¡¨å‚ç›´æ»šåŠ¨ hä»£è¡¨æ°´å¹³æ»šåŠ¨ é»˜è®¤ä¸ºæ°´å¹³æ»šåŠ¨
+            timer:5000 //å•ä½æ˜¯msï¼Œè¡¨ç¤ºåˆ‡æ¢å›¾ç‰‡çš„æ—¶é—´é—´éš”
         });
     </script>
 </body>
