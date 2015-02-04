@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <title>Picture Slider</title>
-    <link rel="stylesheet" href="../src/pic-slider.css?v=1811"/>
+    <link rel="stylesheet" href="../src/pic-slider.css"/>
     <style>
         body{
             color:white;
@@ -35,21 +35,38 @@
                 <div><a href="javascript:;"><img src="images/banner/chn.png" alt="chn" /></a></div>
             </div>
         </div>
+        <div>随机滚动示例</div>
+        <div id="banner3" class="picSlider">
+            <div class="picSliderContainer">
+                <div><a href="javascript:;"><img src="images/banner/index.png" alt="index" /></a></div>
+                <div><a href="javascript:;"><img src="images/banner/friend.png" alt="friend" /></a></div>
+                <div><a href="javascript:;"><img src="images/banner/article.png" alt="article" /></a></div>       
+                <div><a href="javascript:;"><img src="images/banner/salon.png" alt="salon" /></a></div>
+            </div>
+        </div>
     </div>
-    <script src="../src/pic-slider.js?v=1811"></script>
+    <script src="../src/pic-slider.js"></script>
     <script>
         PicSlider.initalize({
             id:'banner', 
             height:250,  
             width:954,
-            direction:'v', //v代表垂直滚动 h代表水平滚动 可选项,默认为水平滚动
-            timer:5000     //单位是ms,表示切换图片的时间间隔
+            direction:'v',  //v代表垂直滚动 h代表水平滚动 可选项,默认为水平滚动
+            timer:5000,     //单位是ms,表示切换图片的时间间隔
+            isRandom: false //是否随机滚动,可选项,默认为false
         });
         PicSlider.initalize({
             id: 'banner2',
             height: 399,
             width: 954,
-            timer: 4000 
+            timer: 4000
+        });
+        PicSlider.initalize({
+            id:'banner3', 
+            height:250,  
+            width:954,
+            timer:2000,     
+            isRandom: true 
         });
     </script>
 </body>

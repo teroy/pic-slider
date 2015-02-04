@@ -11,6 +11,7 @@ var PicSlider = function () {
         this.startIndex = 1; //滚动项为1
         this.rollFrequency = 3; //滚动前进为1/3
         this.rollTimespan = 50; //滚动间隔为50ms
+        this.isRandom = config.isRandom ? config.isRandom: false;
 
         //获取DOM对象
         this.picSlider = document.getElementById(config.id);
@@ -55,7 +56,19 @@ var PicSlider = function () {
     Slider.prototype.next = function () {
         var self = this;
         //确定当前滚动块序号
-        self.startIndex = self.startIndex === self.picCount ? 1 : ++self.startIndex;
+        if (self.isRandom && self.picCount > 2) {
+            //随机滚动
+            var randomIndex;
+            do{
+                randomIndex = Math.ceil(Math.random() * self.picCount);
+            }
+            while(self.startIndex === randomIndex);                      
+            self.startIndex = randomIndex;
+        }
+        else{
+            //顺序滚动
+            self.startIndex = self.startIndex === self.picCount ? 1 : ++self.startIndex;
+        }    
         //确定当前最终到达位置
         var positionX = 0 - (self.startIndex - 1) * self.picSliderWidth;
         var positionY = 0 - (self.startIndex - 1) * self.picSliderHeight;
