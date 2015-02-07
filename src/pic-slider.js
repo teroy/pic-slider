@@ -3,9 +3,11 @@
  * 图片滚动插件
  * 支持IE9+
  */
-var PicSlider = function () {
+(function (window) {
+    //slider数组 用于避免id重复
     var sliderArray = [];
 
+    //Slider对象
     var Slider = function (config) {
         //初始化参数
         this.startIndex = 1; //滚动项为1
@@ -44,80 +46,80 @@ var PicSlider = function () {
             }
         }
     };
-
-    Slider.prototype.start = function () {
-        var self = this;
-        //滚动块数量大于1才开始滚动
-        if (self.picCount > 1) {
-            setTimeout(function () { self.next(); }, self.timer);
-        }
-    };
-
-    Slider.prototype.next = function () {
-        var self = this;
-        //确定当前滚动块序号
-        if (self.isRandom && self.picCount > 2) {
-            //随机滚动
-            var randomIndex;
-            do{
-                randomIndex = Math.ceil(Math.random() * self.picCount);
-            }
-            while(self.startIndex === randomIndex);                      
-            self.startIndex = randomIndex;
-        }
-        else{
-            //顺序滚动
-            self.startIndex = self.startIndex === self.picCount ? 1 : ++self.startIndex;
-        }    
-        //确定当前最终到达位置
-        var positionX = 0 - (self.startIndex - 1) * self.picSliderWidth;
-        var positionY = 0 - (self.startIndex - 1) * self.picSliderHeight;
-        //开始滚动
-        self.goScroll(positionX, positionY);
-    };
-
-    Slider.prototype.goScroll = function (positionX, positionY) {
-        var self = this;
-        if (self.direction === 'v') {
-            //垂直方向滚动
-            var currentY = parseInt(self.picSliderContainer.style.top);
-            if (currentY === positionY) {
-                //已经达到滚动终点 开始下一次轮询滚动
+    Slider.prototype = {
+        start:function () {
+            var self = this;
+            //滚动块数量大于1才开始滚动
+            if (self.picCount > 1) {
                 setTimeout(function () { self.next(); }, self.timer);
-                return;
             }
-            else if (currentY < positionY) {
-                var dist = Math.ceil((positionY - currentY) / self.rollFrequency);
-                currentY = currentY + dist;
+        },
+        next:function () {
+            var self = this;
+            //确定当前滚动块序号
+            if (self.isRandom && self.picCount > 2) {
+                //随机滚动
+                var randomIndex;
+                do{
+                    randomIndex = Math.ceil(Math.random() * self.picCount);
+                }
+                while(self.startIndex === randomIndex);                      
+                self.startIndex = randomIndex;
+            }
+            else{
+                //顺序滚动
+                self.startIndex = self.startIndex === self.picCount ? 1 : ++self.startIndex;
+            }    
+            //确定当前最终到达位置
+            var positionX = 0 - (self.startIndex - 1) * self.picSliderWidth;
+            var positionY = 0 - (self.startIndex - 1) * self.picSliderHeight;
+            //开始滚动
+            self.goScroll(positionX, positionY);
+        },
+        goScroll:function (positionX, positionY) {
+            var self = this;
+            if (self.direction === 'v') {
+                //垂直方向滚动
+                var currentY = parseInt(self.picSliderContainer.style.top);
+                if (currentY === positionY) {
+                    //已经达到滚动终点 开始下一次轮询滚动
+                    setTimeout(function () { self.next(); }, self.timer);
+                    return;
+                }
+                else if (currentY < positionY) {
+                    var dist = Math.ceil((positionY - currentY) / self.rollFrequency);
+                    currentY = currentY + dist;
+                }
+                else {
+                    var dist = Math.ceil((currentY - positionY) / self.rollFrequency);
+                    currentY = currentY - dist;
+                }
+                self.picSliderContainer.style.top = currentY + 'px';
             }
             else {
-                var dist = Math.ceil((currentY - positionY) / self.rollFrequency);
-                currentY = currentY - dist;
+                //水平方向滚动
+                var currentX = parseInt(self.picSliderContainer.style.left);
+                if (currentX === positionX) {
+                    //已经达到滚动终点 开始下一次轮询滚动
+                    setTimeout(function () { self.next(); }, self.timer);
+                    return;
+                }
+                else if (currentX < positionX) {
+                    var dist = Math.ceil((positionX - currentX) / self.rollFrequency);
+                    currentX = currentX + dist;
+                }
+                else {
+                    var dist = Math.ceil((currentX - positionX) / self.rollFrequency);
+                    currentX = currentX - dist;
+                }
+                self.picSliderContainer.style.left = currentX + 'px';
             }
-            self.picSliderContainer.style.top = currentY + 'px';
+            setTimeout(function () { self.goScroll(positionX, positionY); }, self.rollTimespan);
         }
-        else {
-            //水平方向滚动
-            var currentX = parseInt(self.picSliderContainer.style.left);
-            if (currentX === positionX) {
-                //已经达到滚动终点 开始下一次轮询滚动
-                setTimeout(function () { self.next(); }, self.timer);
-                return;
-            }
-            else if (currentX < positionX) {
-                var dist = Math.ceil((positionX - currentX) / self.rollFrequency);
-                currentX = currentX + dist;
-            }
-            else {
-                var dist = Math.ceil((currentX - positionX) / self.rollFrequency);
-                currentX = currentX - dist;
-            }
-            self.picSliderContainer.style.left = currentX + 'px';
-        }
-        setTimeout(function () { self.goScroll(positionX, positionY); }, self.rollTimespan);
     };
 
-    var init = function (config) {
+    //初始化方法
+    function init(config) {
         //判断当前id是否已存在
         for (var i = 0; i < sliderArray.length; i++) {
             if (sliderArray[i] === config.id) {
@@ -133,7 +135,13 @@ var PicSlider = function () {
         slider.start();
     };
 
-    return {
-        initalize: init
+    //加入全局window对象中
+    window.PicSlider = { initalize:init }; 
+
+    if (typeof define === 'function' && define.amd) {
+        //支持AMD模块加载 模块名称为‘PicSlider’ 不引用任何其他模块
+        define('PicSlider', [], function(){
+            return window.PicSlider;
+        });
     };
-}();
+})(window);
