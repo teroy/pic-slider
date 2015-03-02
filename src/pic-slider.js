@@ -3,7 +3,10 @@
  * 图片滚动插件
  * 支持IE9+
  */
-(function (window) {
+(function (win) {
+    //使用严格模式
+    'use strict';
+
     //slider数组 用于避免id重复
     var sliderArray = [];
 
@@ -136,12 +139,12 @@
     };
 
     //加入全局window对象中
-    window.PicSlider = { initalize:init }; 
+    win.PicSlider = { initalize:init }; 
 
     if (typeof define === 'function' && define.amd) {
         //支持AMD模块加载 模块名称为‘PicSlider’ 不引用任何其他模块
         define('PicSlider', [], function(){
-            return window.PicSlider;
+            return win.PicSlider;
         });
     };
 })(window);
