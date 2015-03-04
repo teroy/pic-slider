@@ -20,7 +20,7 @@
 
         //获取DOM对象
         this.picSlider = document.getElementById(config.id);
-        this.picSliderContainer = this.picSlider.getElementsByClassName('picSliderContainer')[0];
+        this.picSliderContainer = this.picSlider.getElementsByTagName('div')[0];
 
         //picSliderContainer的left和top属性
         this.picSliderContainer.style.top = '0px';
